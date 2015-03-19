@@ -1,0 +1,36 @@
+﻿<Window x:Class="Froggy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:char="clr-namespace:Froggy.Characters"
+        Title="Froggy" Height="350" Width="525" KeyDown="Window_KeyDown">
+    <Window.Resources>
+        <ResourceDictionary x:Name="gameStyles" Source="Styles/FroggyGameStyles.xaml" />
+    </Window.Resources>
+    
+    <Grid x:Name="FroggyGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="OtherSideOfTheRoad" />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition x:Name="FroggyStart" />
+        </Grid.RowDefinitions> 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <Border x:Name="FourthTrafficLane" Style="{StaticResource RoadLane}" Grid.Row="1" Grid.ColumnSpan="6"></Border>
+        <Border x:Name="ThirdTrafficLane" Style="{StaticResource RoadLane}" Grid.Row="2" Grid.ColumnSpan="6"></Border>
+        <Border x:Name="SecondTrafficLane" Style="{StaticResource RoadLane}" Grid.Row="3" Grid.ColumnSpan="6"></Border>
+        <Border x:Name="FirstTrafficLane" Style="{StaticResource RoadLane}" Grid.Row="4" Grid.ColumnSpan="6"></Border>
+     
+        <char:LittleFroggy Grid.Row="5" Grid.Column="2" Width="50" Height="50" />
+
+    </Grid>
+</Window>

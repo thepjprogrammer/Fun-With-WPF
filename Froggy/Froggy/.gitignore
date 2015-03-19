@@ -1,0 +1,6 @@
+#VS Debug#
+##########
+bin/Debug/*
+obj/Debug/*
+
+
