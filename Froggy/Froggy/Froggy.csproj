@@ -90,6 +90,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Characters\Character.cs" />
     <Compile Include="Characters\Dumper.xaml.cs">
       <DependentUpon>Dumper.xaml</DependentUpon>
     </Compile>

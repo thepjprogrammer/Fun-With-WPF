@@ -17,20 +17,25 @@ namespace Froggy.Models
     {
         private ReactiveUI.Legacy.ReactiveCommand _moveMainCharacterCommand;
         private GamePiece[,] playingBoard;
+        private int _boardHeight;
+        private int _boardWidth;
 
         public GameModel(int boardWidth, int boardHeight)
         {
+            _boardHeight = boardHeight;
+            _boardWidth = boardWidth;
             playingBoard = new GamePiece[boardWidth, boardHeight];
-
-            //TODO: Handle moving main character around the board...
-            /**_moveMainCharacterCommand = new ReactiveUI.Legacy.ReactiveCommand();
-            _moveMainCharacterCommand.RegisterAsyncAction(_ =>
-            {
-                
-            });**/
-
         }
 
+        public int BoardHeight
+        {
+            get { return _boardHeight; }
+        }
+
+        public int BoardWidth
+        {
+            get { return _boardWidth; }
+        }
 
         public MovingObstaclePiece AddObstacle(int speed, GamePieceLocation location)
         {
@@ -42,6 +47,13 @@ namespace Froggy.Models
         public MovingObstaclePiece AddObstacle(GamePieceLocation location)
         {
             MovingObstaclePiece newPiece = new MovingObstaclePiece(this, 1, GamePieceMovementSpeed.SLOW, location);
+            playingBoard[location.row, location.column] = newPiece;
+            return newPiece;
+        }
+
+        public UserPiece AddMainCharacter(GamePieceLocation location)
+        {
+            UserPiece newPiece = new UserPiece(this, location);
             playingBoard[location.row, location.column] = newPiece;
             return newPiece;
         }

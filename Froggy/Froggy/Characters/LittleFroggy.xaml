@@ -1,11 +1,12 @@
-﻿<UserControl x:Class="Froggy.Characters.LittleFroggy"
+﻿<Characters:Character x:Class="Froggy.Characters.LittleFroggy"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Characters="clr-namespace:Froggy.Characters"
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="20" x:Name="FroggyUC">
     <Grid>
         <Image Source="/Assets/froggy.png" Width="{Binding ActualWidth, ElementName=FroggyUC, FallbackValue=20}" Height="{Binding ActualWidth, ElementName=FroggyUC, FallbackValue=20}" />
     </Grid>
-</UserControl>
+</Characters:Character>

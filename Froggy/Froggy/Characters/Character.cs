@@ -15,14 +15,9 @@ using System.Windows.Shapes;
 
 namespace Froggy.Characters
 {
-    /// <summary>
-    /// Interaction logic for Dumper.xaml
-    /// </summary>
-    public partial class Dumper : Character
+    public class Character : UserControl
     {
-        public Dumper()
-        {
-            InitializeComponent();
-        }
+        public Character(){ }
+
     }
 }

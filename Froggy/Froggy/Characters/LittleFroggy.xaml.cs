@@ -18,7 +18,7 @@ namespace Froggy.Characters
     /// <summary>
     /// Interaction logic for LittleFroggy.xaml
     /// </summary>
-    public partial class LittleFroggy : UserControl
+    public partial class LittleFroggy : Character
     {
         public LittleFroggy()
         {
