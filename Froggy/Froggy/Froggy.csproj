@@ -74,6 +74,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\FroggyViewModel.cs" />
+    <Compile Include="ViewModels\GameViewModel.cs" />
+    <Compile Include="ViewModels\SinglePlayerGameViewModel.cs" />
     <Page Include="Characters\Dumper.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -143,6 +146,9 @@
   <ItemGroup>
     <Resource Include="Assets\froggy.png" />
     <Resource Include="Assets\dumptruck.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\froggy_angel.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -14,12 +14,7 @@ namespace Froggy.Models
 {
     public class FroggyGameModel : GameModel
     {
-        //private GamePiece[,] playingBoard = new GamePiece[6,6];
-
-        public FroggyGameModel(int boardWidth, int boardHeight): base(boardWidth, boardHeight)
-        {
-
-        }
+        public FroggyGameModel(int boardWidth, int boardHeight): base(boardWidth, boardHeight) { }
 
     }
 }

@@ -17,7 +17,15 @@ namespace Froggy.Characters
 {
     public class Character : UserControl
     {
+        public static readonly DependencyProperty _removeFromBoard = DependencyProperty.Register("RemoveFromBoard", typeof(bool), typeof(Character));
+
         public Character(){ }
+
+        public bool RemoveFromBoard
+        {
+            get { return (bool) GetValue(_removeFromBoard);}
+            set { SetValue(_removeFromBoard, value);  }
+        }
 
     }
 }

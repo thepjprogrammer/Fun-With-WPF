@@ -21,9 +21,7 @@ namespace Froggy.Models
         public const int SLOW = 3000;
     }
 
-    public class GamePiece : ReactiveObject
-    {
-    }
+    public class GamePiece : ReactiveObject { }
 
     public struct GamePieceLocation
     {

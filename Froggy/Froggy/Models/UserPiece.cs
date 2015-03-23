@@ -19,6 +19,8 @@ namespace Froggy.Models
 
         public GamePieceLocation Move(GamePieceMovementDirection direction)
         {
+            GamePieceLocation originalLocation = new GamePieceLocation(_location.row, _location.column);
+
             if (GamePieceMovementDirection.Up.Equals(direction) && _location.row > 0)
                 _location.row--;
             else if (GamePieceMovementDirection.Left.Equals(direction) && _location.column > 0)
@@ -27,6 +29,8 @@ namespace Froggy.Models
                 _location.column++;
             else if (GamePieceMovementDirection.Down.Equals(direction) && _location.row < _model.BoardHeight)
                 _location.row++;
+
+            _model.UpdatePieceLocation(originalLocation, _location);
 
             return _location;
         }

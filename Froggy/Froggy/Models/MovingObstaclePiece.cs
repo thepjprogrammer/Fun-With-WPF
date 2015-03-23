@@ -16,6 +16,8 @@ namespace Froggy.Models
         //old school reactive ui code for registering a function
         private ReactiveUI.Legacy.ReactiveCommand _moveCommand;
         readonly ObservableAsPropertyHelper<GamePieceLocation> _locationResults;
+        private GamePieceLocation _lastLocation;
+        private bool _userCollisionEminent;
 
         public MovingObstaclePiece(GameModel myModel, int moveRate, int moveSpeed, GamePieceLocation myLocation) : base(myModel, moveRate, moveSpeed, myLocation)
         {
@@ -29,7 +31,15 @@ namespace Froggy.Models
             var newLocation = MoveCommand.RegisterAsyncFunction(_ =>
             {
                 if (_currentLocation.column > 0)
+                {
+                    LastLocation = new GamePieceLocation(_currentLocation.row, _currentLocation.column);
                     _currentLocation.column--;
+                }
+
+                if (!_model.LocationIsOccupied(_currentLocation))
+                    _model.UpdatePieceLocation(LastLocation, _currentLocation);
+                else if (_model.CollideWithUserPiece(_currentLocation))
+                    UserCollisionEminent = true;
 
                 return _currentLocation;
             }).ToProperty(this, x => x._currentLocation, out _locationResults, _currentLocation);
@@ -52,6 +62,18 @@ namespace Froggy.Models
         private void _updateLocationTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             Move();
+        }
+
+        public bool UserCollisionEminent
+        {
+            get { return _userCollisionEminent; }
+            set { this.RaiseAndSetIfChanged(ref _userCollisionEminent, value); }
+        }
+
+        public GamePieceLocation LastLocation
+        {
+            get { return _lastLocation; }
+            set { this.RaiseAndSetIfChanged(ref _lastLocation, value);  }
         }
 
         public ReactiveUI.Legacy.ReactiveCommand MoveCommand

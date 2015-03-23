@@ -15,16 +15,15 @@ namespace Froggy.Models
 {
     public class GameModel : ReactiveObject
     {
-        private ReactiveUI.Legacy.ReactiveCommand _moveMainCharacterCommand;
-        private GamePiece[,] playingBoard;
-        private int _boardHeight;
-        private int _boardWidth;
+        protected GamePiece[,] _playingBoard;
+        protected int _boardHeight;
+        protected int _boardWidth;
 
         public GameModel(int boardWidth, int boardHeight)
         {
             _boardHeight = boardHeight;
             _boardWidth = boardWidth;
-            playingBoard = new GamePiece[boardWidth, boardHeight];
+            _playingBoard = new GamePiece[boardWidth, boardHeight];
         }
 
         public int BoardHeight
@@ -40,23 +39,45 @@ namespace Froggy.Models
         public MovingObstaclePiece AddObstacle(int speed, GamePieceLocation location)
         {
             MovingObstaclePiece newPiece = new MovingObstaclePiece(this, 1, speed, location);
-            playingBoard[location.row, location.column] = newPiece;
+            _playingBoard[location.row, location.column] = newPiece;
             return newPiece;
         }
 
         public MovingObstaclePiece AddObstacle(GamePieceLocation location)
         {
             MovingObstaclePiece newPiece = new MovingObstaclePiece(this, 1, GamePieceMovementSpeed.SLOW, location);
-            playingBoard[location.row, location.column] = newPiece;
+            _playingBoard[location.row, location.column] = newPiece;
             return newPiece;
         }
 
         public UserPiece AddMainCharacter(GamePieceLocation location)
         {
             UserPiece newPiece = new UserPiece(this, location);
-            playingBoard[location.row, location.column] = newPiece;
+            _playingBoard[location.row, location.column] = newPiece;
             return newPiece;
         }
 
+        public bool LocationIsOccupied(GamePieceLocation location)
+        {
+            return _playingBoard[location.row, location.column] != null;
+        }
+
+        public bool CollideWithUserPiece(GamePieceLocation location)
+        {
+            bool collision = false;
+            var pieceAtLocation = _playingBoard[location.row, location.column];
+
+            if (pieceAtLocation != null && pieceAtLocation is UserPiece)
+                collision = true;
+
+            return collision;
+        }
+
+        public void UpdatePieceLocation(GamePieceLocation oldLocation, GamePieceLocation newLocation)
+        {
+            var gamePiece = _playingBoard[oldLocation.row, oldLocation.column];
+            _playingBoard[newLocation.row, newLocation.column] = gamePiece;
+            _playingBoard[oldLocation.row, oldLocation.column] = null;
+        }
     }
 }

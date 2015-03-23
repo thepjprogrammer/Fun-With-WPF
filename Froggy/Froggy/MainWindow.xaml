@@ -29,8 +29,6 @@
         <Border x:Name="ThirdTrafficLane" Style="{StaticResource RoadLane}" Grid.Row="2" Grid.ColumnSpan="6"></Border>
         <Border x:Name="SecondTrafficLane" Style="{StaticResource RoadLane}" Grid.Row="3" Grid.ColumnSpan="6"></Border>
         <Border x:Name="FirstTrafficLane" Style="{StaticResource RoadLane}" Grid.Row="4" Grid.ColumnSpan="6"></Border>
-     
-        <!--<char:LittleFroggy Grid.Row="5" Grid.Column="2" Width="50" Height="50" />-->
 
     </Grid>
 </Window>

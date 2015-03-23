@@ -7,6 +7,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="20" x:Name="FroggyUC">
     <Grid>
-        <Image Source="/Assets/froggy.png" Width="{Binding ActualWidth, ElementName=FroggyUC, FallbackValue=20}" Height="{Binding ActualWidth, ElementName=FroggyUC, FallbackValue=20}" />
+        <Image x:Name="FroggyImg" Width="{Binding ActualWidth, ElementName=FroggyUC, FallbackValue=20}" Height="{Binding ActualWidth, ElementName=FroggyUC, FallbackValue=20}">
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="Source" Value="/Assets/froggy.png" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RemoveFromBoard, ElementName=FroggyUC}" Value="true">
+                            <Setter  Property="Source" Value="/Assets/froggy_angel.png" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
     </Grid>
 </Characters:Character>

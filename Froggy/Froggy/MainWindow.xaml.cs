@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Froggy.Models;
 using ReactiveUI.Legacy;
 using Froggy.Characters;
+using Froggy.ViewModels;
 
 namespace Froggy
 {
@@ -25,9 +26,7 @@ namespace Froggy
     public partial class MainWindow : Window
     {
         private FroggyGameModel _model;
-        private GamePieceLocation _startLocation = new GamePieceLocation(5, 3);
-        private Character _userCharacter;
-        private UserPiece _userPiece;
+        private FroggyViewModel _vm;
 
         public MainWindow()
         {
@@ -35,83 +34,40 @@ namespace Froggy
 
             this.PreviewKeyDown += MainWindow_PreviewKeyDown;
 
+            //model setup
             _model = new FroggyGameModel(6,6);
 
-            var froggy = _model.AddMainCharacter(_startLocation);
+            //will need to be pulled from the current level
+            var froggy = _model.AddMainCharacter(new GamePieceLocation(5, 3));
             var topDumperObstacle = _model.AddObstacle(GamePieceMovementSpeed.SLOW, new GamePieceLocation(1, 5));
             var secondDumperObstacle = _model.AddObstacle(GamePieceMovementSpeed.FAST, new GamePieceLocation(2, 5));
             var thirdDumperObstacle = _model.AddObstacle(1500, new GamePieceLocation(3, 5));
             var bottomDumperObstacle = _model.AddObstacle(GamePieceMovementSpeed.FAST, new GamePieceLocation(4, 5));
 
-            AddMainCharacter(froggy, _startLocation);
-            AddObstacle(topDumperObstacle);
-            AddObstacle(secondDumperObstacle);
-            AddObstacle(thirdDumperObstacle);
-            AddObstacle(bottomDumperObstacle);
+            //vm setup
+            _vm = new FroggyViewModel(_model, FroggyGrid);
         }
 
         //apparently arrow keys aren't included in keydown ?!?
         private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            GamePieceLocation newLocation;
+            GamePieceLocation newLocation = new GamePieceLocation(-1, -1);
 
             switch(e.Key)
             {
                 case Key.Up:
-                    newLocation = _userPiece.Move(GamePieceMovementDirection.Up);
-                    Grid.SetRow(_userCharacter, newLocation.row);
-                    Grid.SetColumn(_userCharacter, newLocation.column);
+                    _vm.MoveMainCharacter(GamePieceMovementDirection.Up);
                     break;
                 case Key.Right:
-                    newLocation = _userPiece.Move(GamePieceMovementDirection.Right);
-                    Grid.SetRow(_userCharacter, newLocation.row);
-                    Grid.SetColumn(_userCharacter, newLocation.column);
+                    _vm.MoveMainCharacter(GamePieceMovementDirection.Right);
                     break;
                 case Key.Left:
-                    newLocation = _userPiece.Move(GamePieceMovementDirection.Left);
-                    Grid.SetRow(_userCharacter, newLocation.row);
-                    Grid.SetColumn(_userCharacter, newLocation.column);
+                    _vm.MoveMainCharacter(GamePieceMovementDirection.Left);
                     break;
-
             }
+
         }
 
-        private void AddMainCharacter(UserPiece piece, GamePieceLocation location)
-        {
-            var frog = new Characters.LittleFroggy();
-            frog.Width = 75;
-            frog.Height = 75;
-            Grid.SetRow(frog, location.row);
-            Grid.SetColumn(frog, location.column);
-            FroggyGrid.Children.Add(frog);
-
-            _userCharacter = frog;
-            _userPiece = piece;
-        }
-
-        private void AddObstacle(MovingObstaclePiece piece)
-        {
-            var bottomDumper = new Characters.Dumper();
-            BindMovingObstacle(bottomDumper, piece);
-        }
-
-        private void AddPieceToUI(Character uiCharacter, MovingObstaclePiece piece)
-        {
-            BindMovingObstacle(uiCharacter, piece);
-        }
-
-        private void BindMovingObstacle(FrameworkElement el, MovingObstaclePiece piece)
-        {
-            piece.Changed.Subscribe(changedArgs =>
-            {
-                Grid.SetRow(el, piece.CurrentLocation.row);
-                Grid.SetColumn(el, piece.CurrentLocation.column);
-            });
-
-            Grid.SetRow(el, piece.CurrentLocation.row);
-            Grid.SetColumn(el, piece.CurrentLocation.column);
-            FroggyGrid.Children.Add(el);
-        }
 
 
     }
